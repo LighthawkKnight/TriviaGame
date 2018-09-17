@@ -1,0 +1,18 @@
+body {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+}
+
+#answers {
+    list-style: none;
+    cursor: pointer;
+}
+
+.multipleChoice:hover {
+    background-color: blue;
+    color: white;
+}
+
+.multipleChoice:active{
+    background-color: darkblue;
+}
