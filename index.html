@@ -8,20 +8,24 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">;
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
 
 <div class = "container">
-    <div id = "timer"></div>
-    <br><br>
+    <div id = "timer">
+        <span id = "auto">Next question in  </span>
+        <span id = "colon">:</span>
+        <span id = "seconds"></span>
+    </div>
+    <br>
     <div class = "h2" id = "question"></div>
     <br><br>
     <ul class = "ml-6 mr-6 h3" id = "answers"></ul>
     <br>
     <div id = "result"></div>
-    <div id = "resultImg">
-        <img src = "" alt = "">
+    <div>
+        <img id = "resultImg" src = "" alt = "">
     </div>
 </div>
 
