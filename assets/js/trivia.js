@@ -7,7 +7,7 @@ const questions = [ "How many pokemon are there total as of Ultra Sun/Moon?",
     "What was the only core series of games where both parents of the player character was present?",
     "What two pokemon adorned the box art for Pokemon X/Y?",
     "When a Rowlet evolves into a Decidueye, what new type does it gain and what does it replace?"];
-    "What pokemon nature increases Speed but decreases Attack?"
+    "What pokemon nature increases Speed but decreases Special Attack?"
 
 // Multiple choice options indexed by the same order as questions[]
 const multipleChoiceArr = [
@@ -23,25 +23,28 @@ const multipleChoiceArr = [
     ["Jolly", "Sassy", "Hasty", "Naive", "Timid"]]; 
 
 // The correct answer indexed by the same order as above
-const correctAnswer = ["807", "151", "8", "Flash", "Blue", "No Guard", "Ruby/Sapphire/Emerald", "Xerneas/Yveltal", "Ghost replaces Flying", "Timid"];
+const correctAnswer = ["807", "151", "8", "Flash", "Blue", "No Guard", "Ruby/Sapphire/Emerald", "Xerneas/Yveltal", "Ghost replaces Flying", "Jolly"];
 // Some trivia to go along with the correct answer, indexed
 const trivia = ["It's going to break 4 digits soon enough.  Can you name them all?",
                 "If you counted 150, I hope you didn't forget cute little Mew.",
                 "That's a lot of potential in one cute little pokemon!",
-                "A great change too!  Since it was so useless in-battle.",
+                "A great change too!  Since there were only a few it was so useless in-battle.",
                 "The rival's canon name, since that is his name when you finally meet up with him in G/S/E 3 years later",
-                "It stopped being Machop-exclusive starting Generation V, albeit still was a rare ability.",
+                "Their attacks couldn't miss, in return for not being able to dodge.  As you can see, wasn't a problem most of the time.",
                 "In every other game, only your Mom is present, who always sees you off on your journey at the start.",
-                "In the generation that introduced the Fairy-type, Xelneas was one super strong Fairy pokemon!",
-                "Gaining defenses in Normal, Fighting, Rock, Poison, Ice, and Electric was well worth the exchange in losing defenses in Ghost, Dark, and Ground... in my humble opinion.",
+                "Xerneas/Yveltal were the legendary exclusives for X/Y respectively, both of whom were pivotal to the main story.",
+                "Hard to believe the swift ninja-like Decidueye evolves from this super cute little Rowlet.",
                 "Jolly, Hasty, and Naive increased your speed as well, but sacrificed other stats."]
 // Image accompanying answer indexed by the same order as above
-const correctImg = ["assets/gif/807pokemon.gif","assets/gif/mew.gif","assets/gif/eeveelutions.gif","assets/gif/hm05flash.png","","","","",""];
+const p = "assets/img/"  // Image path
+const correctImg = [p+"807pokemon.gif", p+"mew.gif",p+"eeveelutions.gif",p+"hm05flash.png",p+"gary.gif",p+"machamp.gif",
+                    p+"delia.gif",p+"xylegendaries.gif",p+"rowlet.gif", p+"totodile.gif"];
 
 // Trivia question vars
 var multipleChoice =  [];  // Array of the multiple choice answers for the current question
 var answer = "";    // The correct answer to the current question
 var answerImg = "";     // The image to show on the result screen related to the correct answer
+var answerTrivia = "";  // The trivia snippet for the correct answer
 var alreadyAsked = [];  // Questions already answered by index
 
 // Player counter vars
@@ -124,6 +127,7 @@ function newQuestion()
     // Get correct answer+pic to the chosen question as a string
     answer = correctAnswer[questionIndex];
     answerImg = correctImg[questionIndex];
+    answerTrivia = trivia[questionIndex];
 
     // Display multiple choices in html
     $('#answers').empty();
@@ -132,7 +136,6 @@ function newQuestion()
     }
 
     $('#result').hide();
-    $('#resultImg').hide();
     $('#auto').hide();
     $('#question').show();
     $('#answers').show();
@@ -155,14 +158,13 @@ function newQuestion()
 function displayResult(message) {
     $('#question').hide();
     $('#answers').hide();
-    $('#result').empty();
-    $('#result').html(message);
+    $('#resultTxt').html(message);
     if (message !== "Correct!")
-        $('#result').append("  The correct answer was " + answer + ".");
+        $('#resultTxt').append("  The correct answer was " + answer + ".");
     $('#resultImg').attr('src', answerImg);
     $('#resultImg').attr('alt', answer);
+    $('#trivia').html(answerTrivia);
     $('#result').show();
-    $('#resultImg').show();
     $('#auto').show();
     timer.reset(10, true);
     timer.start();   
