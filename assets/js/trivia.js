@@ -6,8 +6,8 @@ const questions = [ "How many pokemon are there total as of Ultra Sun/Moon?",
     "What was the signature ability of Machop's evolutionary line?",
     "What was the only core series of games where both parents of the player character was present?",
     "What two pokemon adorned the box art for Pokemon X/Y?",
-    "When a Rowlet evolves into a Decidueye, what new type does it gain and what does it replace?"];
-    "What pokemon nature increases Speed but decreases Special Attack?"
+    "When a Rowlet evolves into a Decidueye, what new type does it gain and what does it replace?",
+    "What pokemon nature increases Speed but decreases Special Attack?"];
 
 // Multiple choice options indexed by the same order as questions[]
 const multipleChoiceArr = [
@@ -84,12 +84,19 @@ var timer = {
     count: function() { 
         timer.time--;
         $('#seconds').html(timer.timeConverter(timer.time));
+        // $('timerText').html(timer.time);
+        // When time runs out
         if (timer.time === 0) {
             timer.stop();
+            // If we're in the middle of answering a question, user ran out of time
             if (!timer.isResultPage) {
                 timedOut++;
                 displayResult("Time expired!");
             }
+            // If we're in the result page, and every question is answered already
+            else if (alreadyAsked.length === questions.length)
+                gameOver();
+            // If we're in the result page, and there are still questions left
             else
                 newQuestion();
         }
@@ -103,6 +110,16 @@ var timer = {
 };
 
 
+function start(){
+    $('#gameOver').hide();
+    console.log(questions.length);
+    console.log(multipleChoiceArr.length);
+    console.log(correctAnswer.length);
+    console.log(trivia.length);
+    console.log(correctImg.length);
+    newQuestion();
+}
+
 function newQuestion()
 {
     // the index of the random question
@@ -110,15 +127,15 @@ function newQuestion()
 
 
     if (alreadyAsked.length === questions.length) {
-        // Game Over
+        gameOver();
     }
-
 
     // Get index of a random question that hasn't been asked yet
     do 
         questionIndex = Math.floor(Math.random() * questions.length);
     while (alreadyAsked.includes(questionIndex));
     alreadyAsked.push(questionIndex);
+    console.log(alreadyAsked);
     
     $('#question').html(questions[questionIndex]);
 
@@ -137,6 +154,9 @@ function newQuestion()
 
     $('#result').hide();
     $('#auto').hide();
+    $('#resultImg').empty();
+    $('#resultTxt').empty();
+    $('#trivia').empty();
     $('#question').show();
     $('#answers').show();
     timer.reset();
@@ -144,6 +164,7 @@ function newQuestion()
 
     // Handler for answer clicked by user
     $('#answers').on("click", ".multipleChoice", function(){
+        timer.stop();
         if ($(this).text() === answer) {
             right++;
             displayResult("Correct!");
@@ -170,7 +191,15 @@ function displayResult(message) {
     timer.start();   
 }
 
-// This method of shuffling goes through each index of the array once and randomly swaps it with another.  Returns the same 
+function gameOver() {
+    $('#result').hide();
+    $('#auto').hide();
+    $('#gameOver').show();
+    $('#right').html(" " + right);
+    $('#wrong').html(" " + wrong);
+}
+
+// This method of shuffling goes through each index of the array once and randomly swaps it with another.  Returns the same array passed in, except shuffled
 function shuffle(arr) {
     var index = arr.length;
     var temp; 
@@ -181,7 +210,6 @@ function shuffle(arr) {
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * index);
       index--;
-  
       // And swap it with the current element
       temp = arr[index];
       arr[index] = arr[randomIndex];
@@ -202,4 +230,4 @@ function stopBlink(){
     clearInterval(blinkId);
 }
 
-newQuestion();
+start();

@@ -16,3 +16,31 @@ body {
 .multipleChoice:active{
     background-color: darkblue;
 }
+
+/* #timeText {
+    display: inline-block;
+    line-height: 40px;
+}
+
+svg {
+    transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+    stroke-dasharray: 113px;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    stroke: black;
+    fill: none;
+    animation: countdown 10s linear infinite forwards;
+  }
+
+  @keyframes circularTimer {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 113px;
+    }
+  } */
