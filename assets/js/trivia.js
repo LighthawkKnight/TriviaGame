@@ -1,4 +1,4 @@
-const questions = [ "How many pokemon are there total as of Ultra Sun/Moon?",
+const gameQuestions = [ "How many pokemon are there total as of Ultra Sun/Moon?",
     "How many pokemon were there in the original Generation I games (Red/Blue/Yellow)?",
     "How many different ways can you evolve Eevee as of Generation VII (Sun/Moon)?",
     "What HM became a TM starting in Ruby/Sapphire?",
@@ -9,8 +9,8 @@ const questions = [ "How many pokemon are there total as of Ultra Sun/Moon?",
     "When a Rowlet evolves into a Decidueye, what new type does it gain and what does it replace?",
     "What pokemon nature increases Speed but decreases Special Attack?"];
 
-// Multiple choice options indexed by the same order as questions[]
-const multipleChoiceArr = [
+// Multiple choice options indexed by the same order as the questions
+const gameMultipleChoiceArr = [
     ["721", "807", "506", "802", "812"],
     ["150", "251", "151", "250", "386"],
     ["3", "8", "7", "5", "6"],
@@ -23,22 +23,32 @@ const multipleChoiceArr = [
     ["Jolly", "Sassy", "Hasty", "Naive", "Timid"]]; 
 
 // The correct answer indexed by the same order as above
-const correctAnswer = ["807", "151", "8", "Flash", "Blue", "No Guard", "Ruby/Sapphire/Emerald", "Xerneas/Yveltal", "Ghost replaces Flying", "Jolly"];
+const gameCorrectAnswer = ["807", "151", "8", "Flash", "Blue", "No Guard", "Ruby/Sapphire/Emerald", "Xerneas/Yveltal", "Ghost replaces Flying", "Jolly"];
 // Some trivia to go along with the correct answer, indexed
-const trivia = ["It's going to break 4 digits soon enough.  Can you name them all?",
-                "If you counted 150, I hope you didn't forget cute little Mew.",
-                "That's a lot of potential in one cute little pokemon!",
-                "A great change too!  Since there were only a few it was so useless in-battle.",
-                "The rival's canon name, since that is his name when you finally meet up with him in G/S/E 3 years later",
-                "Their attacks couldn't miss, in return for not being able to dodge.  As you can see, wasn't a problem most of the time.",
+const gameTrivia = ["It's going to break 4 digits soon enough.  Can you name them all?",
+                "If you counted 150, I hope you didn't forget cute little Mew!",
+                "Another generation, another eeveelution.  So much potential for such a small pokemon!",
+                "A great change too, since there were only a few dark places to light up coupled with the difficulty in unlearning HM moves.",
+                "Blue is the rival's canon name; since that is his name when you finally meet up with him in G/S/E 3 years later",
+                "Their attacks couldn't miss, in return for not being able to dodge.  The benefits outweighed the disadvantages for the most part.",
                 "In every other game, only your Mom is present, who always sees you off on your journey at the start.",
                 "Xerneas/Yveltal were the legendary exclusives for X/Y respectively, both of whom were pivotal to the main story.",
-                "Hard to believe the swift ninja-like Decidueye evolves from this super cute little Rowlet.",
-                "Jolly, Hasty, and Naive increased your speed as well, but sacrificed other stats."]
+                "Hard to believe the swift ninja-like Decidueye evolves from this cute little owl pokemon.",
+                "Timid, Hasty, and Naive increased your speed as well, but sacrificed other stats."]
 // Image accompanying answer indexed by the same order as above
 const p = "assets/img/"  // Image path
-const correctImg = [p+"807pokemon.gif", p+"mew.gif",p+"eeveelutions.gif",p+"hm05flash.png",p+"gary.gif",p+"machamp.gif",
+const gameCorrectImg = [p+"807pokemon.gif", p+"mew.gif",p+"eeveelutions.gif",p+"hm05flash.png",p+"gary.gif",p+"machamp.gif",
                     p+"delia.gif",p+"xylegendaries.gif",p+"rowlet.gif", p+"totodile.gif"];
+// Time limits
+const questionTime = 25;
+const resultTime = 3;
+
+// Game type array vars
+var questions = [];
+var multipleChoiceArr = [];
+var correctAnswer = [];
+var trivia = [];
+var correctImg = [];
 
 // Trivia question vars
 var multipleChoice =  [];  // Array of the multiple choice answers for the current question
@@ -57,14 +67,14 @@ var blinkId;        // holds the setInterval for blinking colon
 var intervalId;     // holds the setInterval for timer
 var timer = {
 
-    time: 60,
+    time: questionTime,
     clockRunning: false,
     isResultPage: false,     // isResultPage is true if the program is in the transition between questions
    
-    reset: function(startTime = 30, isResultPage = false) {  
+    reset: function(startTime = questionTime, isResultPage = false) {  
         timer.time = startTime;
         timer.isResultPage = isResultPage;
-        $('#seconds').html(startTime);  
+        $('#seconds').html(timer.timeConverter(startTime));  
     },
    
     start: function() {
@@ -112,23 +122,42 @@ var timer = {
 
 function start(){
     $('#gameOver').hide();
+    $('#mainGame').hide();
     console.log(questions.length);
     console.log(multipleChoiceArr.length);
     console.log(correctAnswer.length);
     console.log(trivia.length);
     console.log(correctImg.length);
-    newQuestion();
+    //jQuery fade:  'fast' = 200ms, 'slow' = 600ms, blank = 400ms
+    $('#startScreen').on("click", 'button', function(){
+        var choice = $(this).attr('id');
+        if (choice === "gameQuiz") {
+            questions = gameQuestions;
+            multipleChoiceArr = gameMultipleChoiceArr;
+            correctAnswer = gameCorrectAnswer;
+            trivia = gameTrivia;
+            correctImg = gameCorrectImg;
+            $('#animeQuiz').fadeOut('fast');
+        }
+        else if (choice === "animeQuiz") {
+            questions = gameQuestions;
+            multipleChoiceArr = gameMultipleChoiceArr;
+            correctAnswer = gameCorrectAnswer;
+            trivia = gameTrivia;
+            correctImg = gameCorrectImg;
+        }
+        setTimeout(function(){$('html').fadeOut('slow')}, 1000);
+        
+        ('#startScreen').off("click");
+    });
+
+    // newQuestion();
 }
 
 function newQuestion()
 {
     // the index of the random question
     var questionIndex;
-
-
-    if (alreadyAsked.length === questions.length) {
-        gameOver();
-    }
 
     // Get index of a random question that hasn't been asked yet
     do 
@@ -173,6 +202,8 @@ function newQuestion()
             wrong++;
             displayResult("Incorrect.");
         }
+        $('#answers').off('click');
+        console.log(right + " " + wrong + " " + timedOut);
     });
 }
 
@@ -187,16 +218,18 @@ function displayResult(message) {
     $('#trivia').html(answerTrivia);
     $('#result').show();
     $('#auto').show();
-    timer.reset(10, true);
+    timer.reset(resultTime, true);
     timer.start();   
 }
 
 function gameOver() {
+    $('#timer').hide();
     $('#result').hide();
     $('#auto').hide();
     $('#gameOver').show();
     $('#right').html(" " + right);
     $('#wrong').html(" " + wrong);
+    $('#unaswered').html(" " + timedOut)
 }
 
 // This method of shuffling goes through each index of the array once and randomly swaps it with another.  Returns the same array passed in, except shuffled
@@ -228,6 +261,19 @@ function blink() {    // Blinking colon
 
 function stopBlink(){
     clearInterval(blinkId);
+}
+
+function fadeOut(element) {
+    var opacity = 1;  // initial opacity, 1 = fully visible w/ no fade
+    var timer = setInterval(function () {
+        if (opacity <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = opacity;
+        // element.style.filter = 'alpha(opacity=' + opacity * 100 + ")";
+        opacity -= opacity * 0.1;
+    }, 50);
 }
 
 start();

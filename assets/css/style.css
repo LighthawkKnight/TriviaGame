@@ -3,6 +3,22 @@ body {
     text-align: center;
 }
 
+#gameQuiz {
+}
+
+#animeQuiz, #gameQuiz {
+    height: 200px;
+    width: 400px;
+    background-image: url("../img/anime.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#animeQuiz, #gameQuiz:hover{
+    cursor: pointer;
+}
+
 #answers {
     list-style: none;
     cursor: pointer;

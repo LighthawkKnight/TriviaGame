@@ -9,10 +9,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 
-<div class = "container">
+<div class = "container" id = "mainGame">
     <div id = "timer">
         <span id = "auto">Next question in  </span>
         <span id = "colon">:</span>
@@ -40,6 +41,11 @@
         <div>Incorrect:<span id = "wrong"></span></div>
         <div>Unswered:<span id = "unanswered"></span></div>
     </div>
+</div>
+
+<div class = "container" id = "startScreen">
+    <button id = "gameQuiz" class = "w3-animate-left"></button>
+    <button id = "animeQuiz" class = "w3-animate-right"></button>
 </div>
 
 
