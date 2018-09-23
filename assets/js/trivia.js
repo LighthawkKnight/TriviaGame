@@ -88,8 +88,8 @@ const animeCorrectImg = [
     /*Charizard*/"https://media.giphy.com/media/iS6w9L0bYq1Ne/giphy.gif"];
 
 // Time limits
-const questionTime = 25;
-const resultTime = 3;
+const questionTime = 30;
+const resultTime = 10;
 
 // Game type array vars
 var questions = [];
