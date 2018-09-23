@@ -145,10 +145,32 @@ function start(){
             correctAnswer = gameCorrectAnswer;
             trivia = gameTrivia;
             correctImg = gameCorrectImg;
+            $('#gameQuiz').fadeOut('fast');
         }
-        setTimeout(function(){$('html').fadeOut('slow')}, 1000);
+
+
+        setTimeout(function(){
+            console.log('to3');
+            newQuestion();
+        },900);
+
+        setTimeout(function(){
+            console.log("to2");
+            $('#startScreen').hide();
+            $('html').fadeIn('slow');
+        },850);
+
+        setTimeout(function(){
+            console.log("to1");
+            $('html').fadeOut('slow');
+        },200);
+
+
+
+
+
         
-        ('#startScreen').off("click");
+        $('#startScreen').off("click");
     });
 
     // newQuestion();
@@ -158,7 +180,7 @@ function newQuestion()
 {
     // the index of the random question
     var questionIndex;
-
+    console.log("called newQuestion");
     // Get index of a random question that hasn't been asked yet
     do 
         questionIndex = Math.floor(Math.random() * questions.length);
@@ -186,6 +208,7 @@ function newQuestion()
     $('#resultImg').empty();
     $('#resultTxt').empty();
     $('#trivia').empty();
+    $('#mainGame').show();
     $('#question').show();
     $('#answers').show();
     timer.reset();
