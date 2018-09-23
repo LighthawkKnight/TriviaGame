@@ -9,6 +9,9 @@ const gameQuestions = [ "How many pokemon are there total as of Ultra Sun/Moon?"
     "When a Rowlet evolves into a Decidueye, what new type does it gain and what does it replace?",
     "What pokemon nature increases Speed but decreases Special Attack?"];
 
+const animeQuestions = ["What was Pikachu's first Z-Move?",
+                        "In Pikachu language, what is Ash's name?"]
+
 // Multiple choice options indexed by the same order as the questions
 const gameMultipleChoiceArr = [
     ["721", "807", "506", "802", "812"],
@@ -21,6 +24,13 @@ const gameMultipleChoiceArr = [
     ["Xerneas/Yveltal", "Groudon/Kyogre", "Ho-oh/Lugia", "Reshiram/Zekrom", "Solgaleo/Lunala"],
     ["Ghost replaces Grass", "Ghost replaces Flying", "Flying replaces Ghost", "Flying replaces Grass", "Grass replaces Flying"],
     ["Jolly", "Sassy", "Hasty", "Naive", "Timid"]]; 
+
+const animeMultipleChoiceArr = [
+    ["Gigavolt Havoc", "Breakneck Blitz", "10,000,000 Volt Thunderbolt", "Catastropika", "Stoked Sparksurfer"],
+    ["Pikachu-Pi", "PikaPika", "PikaPi", "Pi-Pikachu", "PikaPika"],
+    [""]
+    ]
+]
 
 // The correct answer indexed by the same order as above
 const gameCorrectAnswer = ["807", "151", "8", "Flash", "Blue", "No Guard", "Ruby/Sapphire/Emerald", "Xerneas/Yveltal", "Ghost replaces Flying", "Jolly"];
